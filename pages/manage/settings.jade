@@ -1,0 +1,17 @@
+extends layout
+
+block nav
+	li
+		a(href="../") Return to site
+	li(role="separator", class="divider")
+	
+	li
+		a(href="/manage/games") Manage Games
+	li
+		a(href="/manage/admins") Manage Admins
+	li.active
+		a(href="/manage/settings") Settings
+
+block content
+	h1 title
+	p Welcome to #{title}

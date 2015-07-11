@@ -20,14 +20,14 @@ block content
 	.row
 		.col-md-4
 		.col-md-4
-			form(action="/login", method="post").form-signin
+			form(action="/register", method="post").form-signin
 				.form-group
-					h2.form-signin-heading.text-center Please sign in
+					h2.form-signin-heading.text-center Please enter desired details
 					label.sr-only(for='username') Username
 					input#username.form-control(type='text', placeholder='Username', required, autofocus, name="username")
 				.form-group
 					label.sr-only(for='password') Password
 					input#password.form-control(type='password', placeholder='Password', required, name="password")
 				.form-group
-					button.btn.btn-lg.btn-primary.btn-block(type='submit') Sign in
+					button.btn.btn-lg.btn-primary.btn-block(type='submit') Register
 		.col-md-4

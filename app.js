@@ -5,8 +5,11 @@ var favicon = require('serve-favicon');
 var morgan = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var passport = require('passport');
 var session = require('express-session');
+var mongoose = require('mongoose');
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+
 
 /* Initialise app */
 var app = express();
@@ -23,7 +26,7 @@ app.locals.pretty = true;
 /* Favicon (current: /static/favicon.ico */
 //app.use(favicon(path.join(__dirname, 'static', 'favicon.ico')));
 
-/* Logging */
+/* General Usings */
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -32,6 +35,19 @@ app.use('/static', express.static(path.join(__dirname, 'static')));
 app.use(session({secret: 'flcsknifecat'}))
 app.use(passport.initialize());
 app.use(passport.session());
+
+/* Passport config */
+var Admin = require('./lib/auth');
+passport.use(new LocalStrategy(Admin.authenticate()));
+passport.serializeUser(Admin.serializeUser());
+passport.deserializeUser(Admin.deserializeUser());
+
+/* Mongoose connection */
+var connStr = 'mongodb://localhost:27017/flcs-data';
+mongoose.connect(connStr, function(err) {
+    if (err) throw err;
+    console.log('Successfully connected to MongoDB');
+});
 
 /* Routing file */
 var routes = require('./routes/index');
@@ -67,6 +83,5 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
-
 
 module.exports = app;
