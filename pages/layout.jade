@@ -18,7 +18,20 @@ html(lang="en")
 					a.navbar-brand(href='#') Untitled Project
 				#navbar.collapse.navbar-collapse
 					ul.nav.navbar-nav
-						block navbar
+						li
+							a(href='/') Home
+						li.dropdown(class=(page === 'games' ? 'active' : ''))
+							a(href='/games', data-toggle="dropdown") Games 
+								span.caret
+							ul.dropdown-menu
+								li
+									a(href="/games/eulcs") EU LCS
+								li
+									a(href="/games/nalcs") NA LCS
+						li(class=(page === 'about' ? 'active' : ''))
+							a(href='/about') About
+						li(class=(page === 'contact' ? 'active' : ''))
+							a(href='/contact') Contact
 		.container
 			block content
 		script(src="static/js/bootstrap.min.js")

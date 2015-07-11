@@ -37,10 +37,10 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 /* Passport config */
-var Admin = require('./lib/auth');
-passport.use(new LocalStrategy(Admin.authenticate()));
-passport.serializeUser(Admin.serializeUser());
-passport.deserializeUser(Admin.deserializeUser());
+var Users = require('./lib/auth');
+passport.use(new LocalStrategy(Users.authenticate()));
+passport.serializeUser(Users.serializeUser());
+passport.deserializeUser(Users.deserializeUser());
 
 /* Mongoose connection */
 var connStr = 'mongodb://localhost:27017/flcs-data';
@@ -50,7 +50,7 @@ mongoose.connect(connStr, function(err) {
 });
 
 /* Routing file */
-var routes = require('./routes/index');
+var routes = require('./routes');
 app.use('/', routes);
 
 // catch 404 and forward to error handler

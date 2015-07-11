@@ -1,21 +1,5 @@
 extends layout
 
-block navbar
-	li
-		a(href='/') Home
-	li.dropdown
-		a(href='/games', data-toggle="dropdown") Games 
-			span.caret
-		ul.dropdown-menu
-			li
-				a(href="/games/eulcs") EU LCS
-			li
-				a(href="/games/nalcs") NA LCS
-	li
-		a(href='/about') About
-	li
-		a(href='/contact') Contact
-
 block content
 	.row
 		.col-md-4
