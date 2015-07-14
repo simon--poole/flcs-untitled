@@ -1,7 +1,8 @@
 var router = require('express').Router();
-var db = require('./lib/database');
-var User = require('./lib/auth');
+var db = require('./controllers/database.controller');
+var User = require('./models/user.model');
 var passport = require('passport');
+var auth = require('connect-ensure-login').ensureLoggedIn;
 
 /* Standard main pages
  * Located ./pages/
@@ -9,6 +10,7 @@ var passport = require('passport');
 
 // Cover Page
 router.get('/', function(req, res, next) {
+  console.log(req.user);
   res.render('index', { title: 'Express', user: req.user });
 });
 
@@ -77,10 +79,8 @@ router.post('/login', function(req, res) {
             res.render('users/login', { user : req.user, err: {message: "Incorrect username or password.", field: "both"} });
         } else {
             req.login(user, function (err) {
-                res.send({
-                    success: true,
-                    user: user
-                });
+				var returnURL = req.session.returnTo || "/";
+                res.redirect(returnURL);
             });
         }
     });
@@ -103,18 +103,18 @@ router.post('/register', function(req, res) {
         if (err) {
             res.render('users/register', {err: {message: err.message, field:"username"}});
         } else {
-            res.redirect('/');
+            res.redirect('/login');
         }
     });
 });
 
 
 /* Management area */
-router.get('/manage', function(req, res, next){
+router.get('/manage', auth('/login'), function(req, res, next){
 	res.render('manage/games', { title: 'Express' });
 });
 
-router.get('/manage/admins', function(req, res, next){
+router.get('/manage/admins', auth('/login'), function(req, res, next){
 	db.listAdmins(function(docs){
 		res.render('manage/admins', {data: docs, user: req.user });
 	});
@@ -124,13 +124,7 @@ router.get('/manage/admins/delete/:id', function(req, res, next){
 	db.deleteAdmin(req.params.id, function(){
 		res.redirect('/manage/admins');
 	});
-});
-router.get('/manage/:action', function(req, res, next) {
-	res.render('manage/'+req.params.action, { title: 'Express' });
-});
-	
-
-	
+});	
 
 
 module.exports = router;

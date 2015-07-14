@@ -37,7 +37,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 /* Passport config */
-var Users = require('./lib/auth');
+var Users = require('./models/user.model');
 passport.use(new LocalStrategy(Users.authenticate()));
 passport.serializeUser(Users.serializeUser());
 passport.deserializeUser(Users.deserializeUser());

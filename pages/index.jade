@@ -41,6 +41,14 @@ html(lang="en")
 							a(href='/about') About
 						li
 							a(href='/contact') Contact
+					-if(typeof user !== 'undefined')
+						ul.navbar-right.nav.navbar-nav
+							li
+								p.navbar-text
+									|Logged in as #{user.username}  
+								
+									a.navbar-link.small(href="/logout")
+										strong (Log Out)	
 		.site-wrapper
 			.site-wrapper-inner
 				.cover-container
