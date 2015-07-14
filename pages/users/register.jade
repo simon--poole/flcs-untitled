@@ -1,31 +1,18 @@
-extends layout
-
-block navbar
-	li
-		a(href='/') Home
-	li.dropdown
-		a(href='/games', data-toggle="dropdown") Games 
-			span.caret
-		ul.dropdown-menu
-			li
-				a(href="/games/eulcs") EU LCS
-			li
-				a(href="/games/nalcs") NA LCS
-	li
-		a(href='/about') About
-	li
-		a(href='/contact') Contact
+extends ../layout
 
 block content
 	.row
 		.col-md-4
 		.col-md-4
 			form(action="/register", method="post").form-signin
-				.form-group
-					h2.form-signin-heading.text-center Please enter desired details
+				h2.form-signin-heading.text-center Register
+				-if(typeof err !== 'undefined')
+					blockquote.has-error
+						p.text-center.err= err.message
+				.form-group(class=((typeof err !== 'undefined' && (err.field === 'username' || err.field === 'both')) ? 'has-error' : ''))
 					label.sr-only(for='username') Username
 					input#username.form-control(type='text', placeholder='Username', required, autofocus, name="username")
-				.form-group
+				.form-group(class=((typeof err !== 'undefined' && (err.field === 'password' || err.field === 'both')) ? 'has-error' : ''))
 					label.sr-only(for='password') Password
 					input#password.form-control(type='password', placeholder='Password', required, name="password")
 				.form-group

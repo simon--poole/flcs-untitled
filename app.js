@@ -29,7 +29,7 @@ app.locals.pretty = true;
 /* General Usings */
 app.use(morgan('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use('/static', express.static(path.join(__dirname, 'static')));
 app.use(session({secret: 'flcsknifecat'}))

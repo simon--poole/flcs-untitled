@@ -1,47 +1,89 @@
 var router = require('express').Router();
 var db = require('./lib/database');
-var Admin = require('./lib/auth');
+var User = require('./lib/auth');
 var passport = require('passport');
 
-/* GET home page. */
+/* Standard main pages
+ * Located ./pages/
+ */
+
+// Cover Page
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('index', { title: 'Express', user: req.user });
 });
 
-/* Standard games view */
-router.get('/games', function(req, res, next) {
-  res.render('games', { title: 'Express', page: 'games' });
-});
-
-/* Standard league view */
-router.get('/games/:league', function(req, res, next) {
-  res.render('games', { title: 'Express', page: 'games' });
-});
-
-/* Standard games view */
-router.get('/games/:league/:week', function(req, res, next) {
-  res.render('games', { title: 'Express', page: 'games' });
-});
-
-/* About page */
+// About Page
 router.get('/about', function(req, res, next) {
   res.render('about', { title: 'Express', page: 'about' });
 });
 
-/* Contact page */
+// Contact Page
 router.get('/contact', function(req, res, next) {
   res.render('contact', { title: 'Express', page: 'contact' });
 });
 
-/* Users */
 
+/* Standard tournament pages
+ * Located ./pages/games
+ */
 
-router.get('/login', function(req, res) {
-    res.render('login', { user : req.user });
+// Games Overview
+router.get('/games', function(req, res, next) {
+  res.render('games/overview', { title: 'Express', page: 'games' });
 });
 
-router.post('/login', passport.authenticate('local'), function(req, res) {
-    res.redirect('/manage');
+// League Overview
+router.get('/games/:league', function(req, res, next) {
+  res.render('games/overview', { title: 'Express', page: 'games' });
+});
+
+// Week Overview
+router.get('/games/:league/:week', function(req, res, next) {
+  res.render('games/overview', { title: 'Express', page: 'games' });
+});
+
+// Specific game
+router.get('/game/:team1/:team2', function(req, res, next) {
+  res.render('games/game', { title: 'Express', page: 'games' });
+});
+
+/* Teams
+ * Location ./pages/teams
+ */
+
+// Team overview (standings)
+router.get('/teams', function(req, res, next) {
+  res.render('teams/overview', { title: 'Express', page: 'teams' });
+});
+
+// Team spotlight
+router.get('/teams/:team', function(req, res, next) {
+  res.render('teams/spotlight', { title: 'Express', page: 'teams' });
+});
+
+	
+/* Users
+ * Located ./pages/users
+ */
+
+router.get('/login', function(req, res) {
+    res.render('users/login', { user : req.user });
+});
+
+router.post('/login', function(req, res) {
+    User.authenticate()(req.body.username, req.body.password, function (err, user, options) {
+        if (err) return next(err);
+        if (user === false) {
+            res.render('users/login', { user : req.user, err: {message: "Incorrect username or password.", field: "both"} });
+        } else {
+            req.login(user, function (err) {
+                res.send({
+                    success: true,
+                    user: user
+                });
+            });
+        }
+    });
 });
 
 router.get('/logout', function(req, res) {
@@ -50,18 +92,19 @@ router.get('/logout', function(req, res) {
 });
 
 router.get('/register', function(req, res, next){
-	res.render('register', { });
+	res.render('users/register', {err: {message: "error message", field:"both"}});
 });
 
 router.post('/register', function(req, res) {
-    Admin.register(new Admin({ username : req.body.username, priv: 0}), req.body.password, function(err, account) {
+	User.register(new User({
+        username: req.body.username,
+		priv: 0
+    }), req.body.password, function (err, user) {
         if (err) {
-            return res.render('register', { account : account });
+            res.render('users/register', {err: {message: err.message, field:"username"}});
+        } else {
+            res.redirect('/');
         }
-
-        passport.authenticate('local')(req, res, function () {
-            res.redirect('/manage');
-        });
     });
 });
 
@@ -72,8 +115,8 @@ router.get('/manage', function(req, res, next){
 });
 
 router.get('/manage/admins', function(req, res, next){
-	db.listAdmins(function(admins){
-		res.render('manage/admins', {data: admins, priv: req.user.priv });
+	db.listAdmins(function(docs){
+		res.render('manage/admins', {data: docs, user: req.user });
 	});
 	
 });

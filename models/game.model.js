@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var Team = require('./team.model').schema;
 
 var Player = mongoose.Schema ({
 	name: String,
@@ -15,7 +16,7 @@ var Game = mongoose.Schema ({
 	played: Boolean,
 	datePlayed: Date,
 	redTeam:  	{
-		name: String,
+		name: [Team],
 		top: [Player],
 		mid: [Player],
 		adc: [Player],
@@ -26,7 +27,7 @@ var Game = mongoose.Schema ({
 		barons: Number
 	},
 	blueTeam: {
-		name: String,
+		name: [Team],
 		top: [Player],
 		mid: [Player],
 		adc: [Player],

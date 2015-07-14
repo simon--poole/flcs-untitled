@@ -23,18 +23,18 @@ block content
 				th ID
 				th Username
 				th Auth Level
-				-if(priv > 20)
+				-if(user && user.priv > 20)
 					th Edit
-				-if(priv > 20)
+				-if(user && user.priv > 20)
 					th Del
 		each admin, i in data
 			tr
 				td= admin._id
 				td= admin.username
 				td= admin.priv
-				-if(priv > 20)
+				-if(user && user.priv > 20)
 					th Edit
-				-if(priv > 20)
+				-if(user && user.priv > 20)
 					th Del
 	style.
 		th {

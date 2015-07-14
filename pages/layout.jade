@@ -28,6 +28,14 @@ html(lang="en")
 									a(href="/games/eulcs") EU LCS
 								li
 									a(href="/games/nalcs") NA LCS
+						li.dropdown(class=(page === 'teams' ? 'active' : ''))
+							a(href='/teams', data-toggle="dropdown") Teams 
+								span.caret
+							ul.dropdown-menu
+								li
+									a(href="#") EU LCS
+								li
+									a(href="#") NA LCS
 						li(class=(page === 'about' ? 'active' : ''))
 							a(href='/about') About
 						li(class=(page === 'contact' ? 'active' : ''))
@@ -35,3 +43,13 @@ html(lang="en")
 		.container
 			block content
 		script(src="static/js/bootstrap.min.js")
+		style.
+			.err {
+				color: red;
+			}
+			.warn {
+				color: orange;
+			}
+			blockquote.has-error {
+				  border-left: 5px solid rgb(102, 7, 7);
+			}
