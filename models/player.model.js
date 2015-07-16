@@ -6,3 +6,5 @@ var Player = mongoose.Schema ({
 	team: [Team],
 	position: String,
 });
+
+module.exports = mongoose.model('Player', Player);

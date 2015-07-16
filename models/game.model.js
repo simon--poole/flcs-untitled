@@ -1,5 +1,4 @@
 var mongoose = require('mongoose');
-var Team = require('./team.model').schema;
 
 var Player = mongoose.Schema ({
 	name: String,
@@ -16,7 +15,7 @@ var Game = mongoose.Schema ({
 	played: Boolean,
 	datePlayed: Date,
 	redTeam:  	{
-		name: [Team],
+		team: String,
 		top: [Player],
 		mid: [Player],
 		adc: [Player],
@@ -27,7 +26,7 @@ var Game = mongoose.Schema ({
 		barons: Number
 	},
 	blueTeam: {
-		name: [Team],
+		team: String,
 		top: [Player],
 		mid: [Player],
 		adc: [Player],
@@ -37,14 +36,17 @@ var Game = mongoose.Schema ({
 		dragons: Number,
 		barons: Number
 	},
-	
 	importDate: Date,
 });
 
-Game.pre('save', function(){
+Game.pre('save', function(next, done){
 	var now = new Date();
 	this.importDate = now;
 	next();
+});
+
+Game.virtual('matchTitle').get(function () {
+  return this.league + " W"+this.week + "D"+this.day + " - " + this.redTeam.team + " vs " + this.blueTeam.team;
 });
 
 module.exports = mongoose.model('Game', Game);

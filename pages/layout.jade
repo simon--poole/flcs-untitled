@@ -1,3 +1,4 @@
+-if(typeof relUrl !== 'string') relUrl = "";
 doctype html
 html(lang="en")
 	head
@@ -5,7 +6,7 @@ html(lang="en")
 		meta(http-equiv='X-UA-Compatible', content='IE=edge')
 		meta(name='viewport', content='width=device-width, initial-scale=1')
 		title= title
-		link(rel='stylesheet', href='static/css/bootstrap.min.css')
+		link(rel='stylesheet', href=relUrl+'static/css/bootstrap.min.css')
 	body
 		nav.navbar.navbar-static-top.navbar-default
 			.container
@@ -42,7 +43,7 @@ html(lang="en")
 							a(href='/contact') Contact
 		.container
 			block content
-		script(src="static/js/bootstrap.min.js")
+		script(src=relUrl+"static/js/bootstrap.min.js")
 		style.
 			.err {
 				color: red;

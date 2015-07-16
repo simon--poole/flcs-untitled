@@ -1,6 +1,9 @@
 var router = require('express').Router();
 var db = require('./controllers/database.controller');
 var User = require('./models/user.model');
+var Game = require('./models/game.model');
+var Team = require('./models/team.model');
+var Player = require('./models/player.model');
 var passport = require('passport');
 var auth = require('connect-ensure-login').ensureLoggedIn;
 
@@ -46,7 +49,47 @@ router.get('/games/:league/:week', function(req, res, next) {
 
 // Specific game
 router.get('/game/:team1/:team2', function(req, res, next) {
-  res.render('games/game', { title: 'Express', page: 'games' });
+  var testTeam = new Team({
+	  "region": "NA",
+	  "name": "TSM"
+  });
+  var testPlayer = new Player({
+	  "name": "TheOddOne",
+	  "team": testTeam,
+	  "position": "Top",
+  });
+  var date = new Date();
+  var testGame = new Game({
+	  "week": "6",
+	  "day": "2",
+	  "league": "NALCS",
+	  "played": true,
+	  "datePlayed": date,
+	  "redTeam": {
+	  	"team": "TSM",
+	    "top": testPlayer,
+		"mid": testPlayer,
+		"adc": testPlayer,
+		"support": testPlayer,
+		"jungler": testPlayer,
+		"towers": 0,
+		"dragons": 0,
+		"barons": 0,
+	   },
+	  "blueTeam": {
+	  	"team": "CLG",
+	    "top": testPlayer,
+		"mid": testPlayer,
+		"adc": testPlayer,
+		"support": testPlayer,
+		"jungler": testPlayer,
+		"towers": 0,
+		"dragons": 0,
+		"barons": 0,
+	  },
+	  "importDate": date,
+  });
+  res.render('games/game', { title: 'Express', page: 'games', relUrl: '../../../', game: testGame });
 });
 
 /* Teams
