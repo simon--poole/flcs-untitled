@@ -36,6 +36,9 @@ app.use(session({secret: 'flcsknifecat'}))
 app.use(passport.initialize());
 app.use(passport.session());
 
+/* Locals to be used in Jade templates */
+app.locals.moment = require('moment');
+
 /* Passport config */
 var Users = require('./models/user.model');
 passport.use(new LocalStrategy(Users.authenticate()));

@@ -1,4 +1,181 @@
 extends ../layout
-
 block content
-	h1 #{game.matchTitle}
+	-var date = moment(game.datePlayed);
+	.container.text-center
+		.team.col-md-4
+			img(src=relUrl+"static/img/teams/"+game.blueTeam.team+".png")
+		.col-md-4
+			.p
+				|#{date.format("dddd, MMMM Do YYYY")}
+				h4
+					|#{game.league + " W" + game.week + "D" + game.day}
+			.title
+				h2
+					|#{game.blueTeam.team + " vs " + game.redTeam.team}
+		.team.col-md-4
+			img(src=relUrl+"static/img/teams/"+game.redTeam.team+".png")
+		br
+		-if(!game.played)
+			- winner = game.winner ? game.blueTeam.team : game.redTeam.team;
+			h3
+				strong
+					|#{winner} wins 
+			h5 in #{Math.round(game.length/60)} minutes #{game.length%60} seconds.
+			br
+			.col-md-6
+				h5 #{game.blueTeam.team}
+				table.table.table-striped.table-bordered.table-hover
+					thead
+						tr
+							th Player
+							th K
+							th D
+							th A
+							th CS
+							th Pts
+					tbody(class=game.winner ? "winner" : "loser").left
+						tr
+							td 
+								img(src=relUrl+"static/img/players/"+game.blueTeam.top[0].name + ".png").player
+								|#{game.blueTeam.top[0].name}
+							td #{game.blueTeam.top[0].kills}
+							td #{game.blueTeam.top[0].deaths}
+							td #{game.blueTeam.top[0].assists}
+							td #{game.blueTeam.top[0].creeps}
+							td #{game.blueTeam.top[0].points}
+						tr
+							td 
+								img(src=relUrl+"static/img/players/"+game.blueTeam.mid[0].name + ".png").player
+								|#{game.blueTeam.mid[0].name}
+							td #{game.blueTeam.mid[0].kills}
+							td #{game.blueTeam.mid[0].deaths}
+							td #{game.blueTeam.mid[0].assists}
+							td #{game.blueTeam.mid[0].creeps}
+							td #{game.blueTeam.mid[0].points}
+						tr
+							td 
+								img(src=relUrl+"static/img/players/"+game.blueTeam.jungler[0].name + ".png").player
+								|#{game.blueTeam.jungler[0].name}
+							td #{game.blueTeam.jungler[0].kills}
+							td #{game.blueTeam.jungler[0].deaths}
+							td #{game.blueTeam.jungler[0].assists}
+							td #{game.blueTeam.jungler[0].creeps}
+							td #{game.blueTeam.jungler[0].points}
+						tr
+							td 
+								img(src=relUrl+"static/img/players/"+game.blueTeam.adc[0].name + ".png").player
+								|#{game.blueTeam.adc[0].name}
+							td #{game.blueTeam.adc[0].kills}
+							td #{game.blueTeam.adc[0].deaths}
+							td #{game.blueTeam.adc[0].assists}
+							td #{game.blueTeam.adc[0].creeps}
+							td #{game.blueTeam.adc[0].points}
+						tr
+							td 
+								img(src=relUrl+"static/img/players/"+game.blueTeam.support[0].name + ".png").player
+								|#{game.blueTeam.support[0].name}
+							td #{game.blueTeam.support[0].kills}
+							td #{game.blueTeam.support[0].deaths}
+							td #{game.blueTeam.support[0].assists}
+							td #{game.blueTeam.support[0].creeps}
+							td #{game.blueTeam.support[0].points}
+			.col-md-6
+				h5 #{game.redTeam.team}
+				table.table.table-striped.table-bordered.table-hover
+					thead
+						tr
+							th Player
+							th K
+							th D
+							th A
+							th CS
+							th Pts
+					tbody(class=!game.winner ? "winner" : "loser")
+						tr
+							td 
+								img(src=relUrl+"static/img/players/"+game.redTeam.top[0].name + ".png").player
+								|#{game.redTeam.top[0].name}
+							td #{game.redTeam.top[0].kills}
+							td #{game.redTeam.top[0].deaths}
+							td #{game.redTeam.top[0].assists}
+							td #{game.redTeam.top[0].creeps}
+							td #{game.redTeam.top[0].points}
+						tr
+							td 
+								img(src=relUrl+"static/img/players/"+game.redTeam.mid[0].name + ".png").player
+								|#{game.redTeam.mid[0].name}
+							td #{game.redTeam.mid[0].kills}
+							td #{game.redTeam.mid[0].deaths}
+							td #{game.redTeam.mid[0].assists}
+							td #{game.redTeam.mid[0].creeps}
+							td #{game.redTeam.mid[0].points}
+						tr
+							td 
+								img(src=relUrl+"static/img/players/"+game.redTeam.jungler[0].name + ".png").player
+								|#{game.redTeam.jungler[0].name}
+							td #{game.redTeam.jungler[0].kills}
+							td #{game.redTeam.jungler[0].deaths}
+							td #{game.redTeam.jungler[0].assists}
+							td #{game.redTeam.jungler[0].creeps}
+							td #{game.redTeam.jungler[0].points}
+						tr
+							td 
+								img(src=relUrl+"static/img/players/"+game.redTeam.adc[0].name + ".png").player
+								|#{game.redTeam.adc[0].name}
+							td #{game.redTeam.adc[0].kills}
+							td #{game.redTeam.adc[0].deaths}
+							td #{game.redTeam.adc[0].assists}
+							td #{game.redTeam.adc[0].creeps}
+							td #{game.redTeam.adc[0].points}
+						tr
+							td 
+								img(src=relUrl+"static/img/players/"+game.redTeam.support[0].name + ".png").player
+								|#{game.redTeam.support[0].name}
+							td #{game.redTeam.support[0].kills}
+							td #{game.redTeam.support[0].deaths}
+							td #{game.redTeam.support[0].assists}
+							td #{game.redTeam.support[0].creeps}
+							td #{game.redTeam.support[0].points}
+			
+		-else
+			-var now = moment();
+			h5
+				|Game Start
+			p
+				|#{now.to(date)}
+	style.
+		.player {
+			float: left;
+		}
+		.team, .title {
+			text-align: center;
+			height: 250px;
+			line-height: 250px!important;
+			vertical-align: middle;
+			margin: auto;
+			position: relative;
+		}
+		.title {
+			margin-top: -76px;
+		}
+		.title h2 {
+			line-height: 250px!important;
+		}
+		.team img {
+			width: 200px;
+			margin: auto;
+			vertical-align: middle;
+			position: relative;
+		}
+		td {
+			height: 59px;
+			overflow: hidden;
+			line-height: 59px!important;
+			padding: 0!important;
+		}
+		tbody.winner {
+			color: lightgreen;
+		}
+		tbody.loser {
+			color: #ff8080;
+		}

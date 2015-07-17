@@ -1,17 +1,17 @@
 {
   "name": "FantasyLCS",
   "contributors": [
-	  {
-		  "name": "Simon Poole",
-		  "email": "simon__poole@hotmail.com",
-		  "github": "http://github.com/simon--poole"
-	  }
-   ],
+    {
+      "name": "Simon Poole",
+      "email": "simon__poole@hotmail.com",
+      "github": "http://github.com/simon--poole"
+    }
+  ],
   "version": "0.0.1",
   "repository": {
-	  "type": "git",
-	  "url": "https://github.com/simon--poole/flcs-untitled"
-	},
+    "type": "git",
+    "url": "https://github.com/simon--poole/flcs-untitled"
+  },
   "private": true,
   "scripts": {
     "start": "node ./bin/www"
@@ -24,6 +24,7 @@
     "express": "~4.13.0",
     "express-session": "^1.11.3",
     "jade": "~1.11.0",
+    "moment": "^2.10.3",
     "mongoose": "^4.0.6",
     "morgan": "~1.6.1",
     "passport": "^0.2.2",

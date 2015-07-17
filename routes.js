@@ -4,6 +4,7 @@ var User = require('./models/user.model');
 var Game = require('./models/game.model');
 var Team = require('./models/team.model');
 var Player = require('./models/player.model');
+var PlayerScore = require('./models/playerScore.model');
 var passport = require('passport');
 var auth = require('connect-ensure-login').ensureLoggedIn;
 
@@ -53,10 +54,12 @@ router.get('/game/:team1/:team2', function(req, res, next) {
 	  "region": "NA",
 	  "name": "TSM"
   });
-  var testPlayer = new Player({
+  var testPlayer = new PlayerScore({
 	  "name": "TheOddOne",
-	  "team": testTeam,
-	  "position": "Top",
+	  "kills": 1,
+	  "deaths": 3,
+	  "assists": 3,
+	  "creeps": 7
   });
   var date = new Date();
   var testGame = new Game({
@@ -64,6 +67,8 @@ router.get('/game/:team1/:team2', function(req, res, next) {
 	  "day": "2",
 	  "league": "NALCS",
 	  "played": true,
+	  "winner": true,
+	  "length": 6605,
 	  "datePlayed": date,
 	  "redTeam": {
 	  	"team": "TSM",
