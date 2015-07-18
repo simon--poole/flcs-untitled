@@ -41,6 +41,9 @@ html(lang="en")
 							a(href='/about') About
 						li
 							a(href='/contact') Contact
+						-if(typeof user !== 'undefined')
+							li(class=(page === 'manage' ? 'active' : ''))
+								a(href='/manage') Manage
 					-if(typeof user !== 'undefined')
 						ul.navbar-right.nav.navbar-nav
 							li

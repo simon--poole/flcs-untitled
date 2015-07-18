@@ -20,12 +20,12 @@ router.get('/', function(req, res, next) {
 
 // About Page
 router.get('/about', function(req, res, next) {
-  res.render('about', { title: 'Express', page: 'about' });
+  res.render('about', { title: 'Express', page: 'about', user: req.user });
 });
 
 // Contact Page
 router.get('/contact', function(req, res, next) {
-  res.render('contact', { title: 'Express', page: 'contact' });
+  res.render('contact', { title: 'Express', page: 'contact', user: req.user });
 });
 
 
@@ -35,17 +35,17 @@ router.get('/contact', function(req, res, next) {
 
 // Games Overview
 router.get('/games', function(req, res, next) {
-  res.render('games/overview', { title: 'Express', page: 'games' });
+  res.render('games/overview', { title: 'Express', page: 'games', user: req.user });
 });
 
 // League Overview
 router.get('/games/:league', function(req, res, next) {
-  res.render('games/overview', { title: 'Express', page: 'games' });
+  res.render('games/overview', { title: 'Express', page: 'games', user: req.user });
 });
 
 // Week Overview
 router.get('/games/:league/:week', function(req, res, next) {
-  res.render('games/overview', { title: 'Express', page: 'games' });
+  res.render('games/overview', { title: 'Express', page: 'games', user: req.user });
 });
 
 // Specific game
@@ -97,7 +97,7 @@ router.get('/game/:team1/:team2/:week', function(req, res, next) {
 	  },
 	  "importDate": date,
   });
-  res.render('games/game', { title: 'Express', page: 'games', relUrl: '../../../', game: testGame });
+  res.render('games/game', { title: 'Express', page: 'games', relUrl: '../../../', game: testGame, user: req.user });
 });
 
 /* Teams
@@ -106,11 +106,11 @@ router.get('/game/:team1/:team2/:week', function(req, res, next) {
 
 // Team overview (standings)
 router.get('/teams', function(req, res, next) {
-  res.render('teams/overview', { title: 'Express', page: 'teams' });
+  res.render('teams/overview', { title: 'Express', page: 'teams', user: req.user });
 });
 
 router.get('/teams/:region', function(req, res, next) {
-  res.render('teams/overview', { title: 'Express', page: 'teams', relUrl: '../' });
+  res.render('teams/overview', { title: 'Express', page: 'teams', relUrl: '../', user: req.user });
 });
 
 // Team spotlight
@@ -170,7 +170,7 @@ router.get('/team/:team', function(req, res, next) {
   });
 	var exampleGames = [testGame, testGame, testGame];
 	var players = [testPlayerD, testPlayerD, testPlayerD, testPlayerD, testPlayerD, testPlayerD];
-  res.render('teams/team', { title: 'Express', page: 'teams', relUrl: '../', team: exampleTeam, games: exampleGames, players: players });
+  res.render('teams/team', { title: 'Express', page: 'teams', relUrl: '../', team: exampleTeam, games: exampleGames, players: players, user: req.user });
 });
 
 	
@@ -198,11 +198,11 @@ router.post('/login', function(req, res) {
 
 router.get('/logout', function(req, res) {
     req.logout();
-    res.redirect('/');
+    res.redirect("/");
 });
 
 router.get('/register', function(req, res, next){
-	res.render('users/register', {err: {message: "error message", field:"both"}});
+	res.render('users/register', {err: {message: "error message", field:"both"}, user: req.user});
 });
 
 router.post('/register', function(req, res) {
@@ -211,7 +211,7 @@ router.post('/register', function(req, res) {
 		priv: 0
     }), req.body.password, function (err, user) {
         if (err) {
-            res.render('users/register', {err: {message: err.message, field:"username"}});
+            res.render('users/register', {err: {message: err.message, field:"username"}, user: req.user});
         } else {
             res.redirect('/login');
         }
@@ -221,7 +221,7 @@ router.post('/register', function(req, res) {
 
 /* Management area */
 router.get('/manage', auth('/login'), function(req, res, next){
-	res.render('manage/games', { title: 'Express' });
+	res.render('manage/games', { title: 'Express', user: req.user });
 });
 
 router.get('/manage/admins', auth('/login'), function(req, res, next){

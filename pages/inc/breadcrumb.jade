@@ -1,4 +1,7 @@
 ol.breadcrumb
 	each layer, i in location
-		li
-			a(href=layer.url)= layer.name
+		if(i==(location.length-1))
+			li.active #{layer.name}
+		else
+			li
+				a(href=layer.url)= layer.name

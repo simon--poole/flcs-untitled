@@ -41,6 +41,17 @@ html(lang="en")
 							a(href='/about') About
 						li(class=(page === 'contact' ? 'active' : ''))
 							a(href='/contact') Contact
+						-if(typeof user !== 'undefined')
+							li(class=(page === 'manage' ? 'active' : ''))
+								a(href='/manage') Manage
+					-if(typeof user !== 'undefined')
+						ul.navbar-right.nav.navbar-nav
+							li
+								p.navbar-text
+									|Logged in as #{user.username}  
+								
+									a.navbar-link.small(href="/logout")
+										strong (Log Out)	
 		.container
 			block content
 		script(src=relUrl+"static/js/bootstrap.min.js")
