@@ -49,7 +49,7 @@ router.get('/games/:league/:week', function(req, res, next) {
 });
 
 // Specific game
-router.get('/game/:team1/:team2', function(req, res, next) {
+router.get('/game/:team1/:team2/:week', function(req, res, next) {
   var testTeam = new Team({
 	  "region": "NA",
 	  "name": "TSM"
@@ -119,9 +119,58 @@ router.get('/team/:team', function(req, res, next) {
 	  "name": "Team Solo Mid",
 	  "acronym": "TSM",
 	  "region": "na",
-	  "description": "Trash"
+	  "description": "Praesent non mi nizzle maurizzle posuere bibendizzle. You son of a bizzle rizzle fo shizzle mah nizzle fo rizzle, mah home g-dizzle for sure. Cras izzle dawg mah nizzle leo sodalizzle fo shizzle. Fo shizzle gangsta, da bomb bizzle dapibus shizznit, nulla i'm in the shizzle sure metizzle, izzle yippiyo augue its fo rizzle in things. Vivamizzle go to hizzle fo shizzle bizzle fizzle. Away arcu funky fresh, fermentizzle black funky fresh, faucibus izzle, dope check out this, maurizzle. Sizzle vehicula laoreet shit. Fizzle brizzle its fo rizzle, fizzle et, crazy izzle, fo a, arcu. Morbi uhuh ... yih! placerizzle you son of a bizzle. Cool shizzle my nizzle crocodizzle eros id erat. Pot fo shizzle mah nizzle fo rizzle, mah home g-dizzle sizzle, egestizzle fo, accumsizzle quizzle, yo eget, neque. Nulla iaculizzle gangsta a orci tincidunt sodales. Fusce sagittis, nulla eget sollicitudizzle mah nizzle, lacizzle dope luctus erizzle, sizzle check out this augue purizzle black da bomb. Etiam lacus. Boofron sizzle mi. Dizzle black turpis. Fo break it down shizznit. Mofo turpis erizzle, yo mamma id, go to hizzle izzle, facilisis yo mamma, shut the shizzle up. Nunc tellizzle. Nulla funky fresh eros, tristique sit amet, shut the shizzle up yo, tincidunt nizzle, brizzle."
   });
-  res.render('teams/team', { title: 'Express', page: 'teams', relUrl: '../', team: exampleTeam });
+	var testPlayer = new PlayerScore({
+	  "name": "TheOddOne",
+	  "kills": 1,
+	  "deaths": 3,
+	  "assists": 3,
+	  "creeps": 7,
+	  "pentas": 0,
+	  "quadras": 0,
+	  "triples": 0,
+  });
+  var testPlayerD = new Player({
+	  "name": "TheOddOne",
+	  "position": "Coach",
+  });
+  var date = new Date();
+  var testGame = new Game({
+	  "week": "6",
+	  "day": "2",
+	  "league": "nalcs",
+	  "played": true,
+	  "winner": true,
+	  "length": 6605,
+	  "datePlayed": date,
+	  "redTeam": {
+	  	"team": "TSM",
+	    "top": testPlayer,
+		"mid": testPlayer,
+		"adc": testPlayer,
+		"support": testPlayer,
+		"jungler": testPlayer,
+		"towers": 0,
+		"dragons": 0,
+		"barons": 0,
+	   },
+	  "blueTeam": {
+	  	"team": "CLG",
+	    "top": testPlayer,
+		"mid": testPlayer,
+		"adc": testPlayer,
+		"support": testPlayer,
+		"jungler": testPlayer,
+		"towers": 0,
+		"dragons": 0,
+		"barons": 0,
+	  },
+	  "importDate": date,
+  });
+	var exampleGames = [testGame, testGame, testGame];
+	var players = [testPlayerD, testPlayerD, testPlayerD, testPlayerD, testPlayerD, testPlayerD];
+  res.render('teams/team', { title: 'Express', page: 'teams', relUrl: '../', team: exampleTeam, games: exampleGames, players: players });
 });
 
 	

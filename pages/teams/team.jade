@@ -5,28 +5,50 @@ block content
 		include ../inc/breadcrumb.jade
 		.team.col-md-3.text-center
 			img(src=relUrl+"static/img/teams/"+team.acronym+".png")
-		.col-md-7
-			.p
-				|North American LCS
+			
+		.col-md-9
 			.title.text-left
-					h2 #{team.name}
-		
+				h2 #{team.name}
+			p.description 
+				|&nbsp;#{team.description}
+		.col-md-12
+			h4 Team Members
+			.players
+				table.table.table-striped.table-hover.table-bordered.players
+					thead
+						tr
+							th
+								|Player
+								
+					tbody
+						each player in players
+							tr.player
+								td
+									img(src=relUrl+"static/img/players/"+player.name+".png")
+									strong.name #{player.name}
+									|  // #{player.position}
+		.col-md-12
+			h4 Upcoming Games
+			.well contents
+		.col-md-12
+			h4 Previous Games
+			.well contents
 	style.
-		.player {
-			float: left;
+		.players {
+			text-align: justify;
+			width: 100%;
 		}
-		.team, .title {
-			height: 250px;
-			line-height: 250px!important;
+		.player, .player > td {
+			height: 59px;
+			overflow: hidden;
+		}
+		.player > td > img {
+			height: 59px;
+		}
+		.team {
+			line-height: 250px;
 			vertical-align: middle;
 			margin: auto;
-		}
-		.title h2 {
-			line-height: 250px!important;
-			margin: 0;
-		}
-		h4 {
-			line-height: 250px!important;
 		}
 		.team img {
 			width: 200px;
