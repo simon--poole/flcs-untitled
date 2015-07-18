@@ -7,4 +7,5 @@ var Player = mongoose.Schema ({
 	position: String,
 });
 
+
 module.exports = mongoose.model('Player', Player);

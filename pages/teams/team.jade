@@ -1,0 +1,47 @@
+extends ../layout
+block content
+	.container
+		- location = [{"url": "/", "name": "Site"}, {"url": "/teams", "name": "Teams"}, {"url": "/teams/"+team.region, "name": displayNames[team.region]}, {"url": "/team/"+team.acronym, "name": team.acronym}];
+		include ../inc/breadcrumb.jade
+		.team.col-md-3.text-center
+			img(src=relUrl+"static/img/teams/"+team.acronym+".png")
+		.col-md-7
+			.p
+				|North American LCS
+			.title.text-left
+					h2 #{team.name}
+		
+	style.
+		.player {
+			float: left;
+		}
+		.team, .title {
+			height: 250px;
+			line-height: 250px!important;
+			vertical-align: middle;
+			margin: auto;
+		}
+		.title h2 {
+			line-height: 250px!important;
+			margin: 0;
+		}
+		h4 {
+			line-height: 250px!important;
+		}
+		.team img {
+			width: 200px;
+			margin: auto;
+			vertical-align: middle;
+		}
+		td {
+			height: 59px;
+			overflow: hidden;
+			line-height: 59px!important;
+			padding: 0!important;
+		}
+		tbody.winner {
+			color: lightgreen;
+		}
+		tbody.loser {
+			color: #ff8080;
+		}

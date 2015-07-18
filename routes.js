@@ -59,13 +59,16 @@ router.get('/game/:team1/:team2', function(req, res, next) {
 	  "kills": 1,
 	  "deaths": 3,
 	  "assists": 3,
-	  "creeps": 7
+	  "creeps": 7,
+	  "pentas": 0,
+	  "quadras": 0,
+	  "triples": 0,
   });
   var date = new Date();
   var testGame = new Game({
 	  "week": "6",
 	  "day": "2",
-	  "league": "NALCS",
+	  "league": "nalcs",
 	  "played": true,
 	  "winner": true,
 	  "length": 6605,
@@ -106,9 +109,19 @@ router.get('/teams', function(req, res, next) {
   res.render('teams/overview', { title: 'Express', page: 'teams' });
 });
 
+router.get('/teams/:region', function(req, res, next) {
+  res.render('teams/overview', { title: 'Express', page: 'teams', relUrl: '../' });
+});
+
 // Team spotlight
-router.get('/teams/:team', function(req, res, next) {
-  res.render('teams/spotlight', { title: 'Express', page: 'teams' });
+router.get('/team/:team', function(req, res, next) {
+  var exampleTeam = new Team({ 
+	  "name": "Team Solo Mid",
+	  "acronym": "TSM",
+	  "region": "na",
+	  "description": "Trash"
+  });
+  res.render('teams/team', { title: 'Express', page: 'teams', relUrl: '../', team: exampleTeam });
 });
 
 	

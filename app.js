@@ -38,6 +38,11 @@ app.use(passport.session());
 
 /* Locals to be used in Jade templates */
 app.locals.moment = require('moment');
+var acronyms = new Array();
+acronyms['nalcs'] = "North American LCS";
+acronyms['eulcs'] = "European LCS";
+acronyms['na'] = "North America";
+app.locals.displayNames = acronyms;
 
 /* Passport config */
 var Users = require('./models/user.model');

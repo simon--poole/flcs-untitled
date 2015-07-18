@@ -1,6 +1,9 @@
 extends ../layout
 block content
 	-var date = moment(game.datePlayed);
+	.container
+		- location = [{"url": "/", "name": "Site"}, {"url": "/games", "name": "Games"}, {"url": "/games/"+game.league, "name": displayNames[game.league]}, {"url": "/games/"+game.league+"/"+game.week, "name": "Week "+game.week}, {"name": game.blueTeam.team + " vs " + game.redTeam.team}];
+		include ../inc/breadcrumb.jade
 	.container.text-center
 		.team.col-md-4
 			img(src=relUrl+"static/img/teams/"+game.blueTeam.team+".png")
@@ -8,14 +11,14 @@ block content
 			.p
 				|#{date.format("dddd, MMMM Do YYYY")}
 				h4
-					|#{game.league + " W" + game.week + "D" + game.day}
+					|#{displayNames[game.league]+ " W" + game.week + "D" + game.day}
 			.title
 				h2
 					|#{game.blueTeam.team + " vs " + game.redTeam.team}
 		.team.col-md-4
 			img(src=relUrl+"static/img/teams/"+game.redTeam.team+".png")
 		br
-		-if(!game.played)
+		-if(game.played)
 			- winner = game.winner ? game.blueTeam.team : game.redTeam.team;
 			h3
 				strong
@@ -146,6 +149,7 @@ block content
 	style.
 		.player {
 			float: left;
+			height: 70px;
 		}
 		.team, .title {
 			text-align: center;
@@ -168,9 +172,9 @@ block content
 			position: relative;
 		}
 		td {
-			height: 59px;
+			height: 70px;
 			overflow: hidden;
-			line-height: 59px!important;
+			line-height: 70px!important;
 			padding: 0!important;
 		}
 		tbody.winner {
