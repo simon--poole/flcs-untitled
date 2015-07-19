@@ -13,6 +13,8 @@ var LocalStrategy = require('passport-local').Strategy;
 
 /* Initialise app */
 var app = express();
+var port = process.env.PORT || 8080;
+app.set('port', port);
 
 /* Set app to development */
 app.set('env', 'development');
@@ -91,5 +93,5 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
-
+app.listen(port);
 module.exports = app;

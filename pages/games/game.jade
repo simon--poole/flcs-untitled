@@ -5,7 +5,7 @@ block content
 		- location = [{"url": "/", "name": "Site"}, {"url": "/games", "name": "Games"}, {"url": "/games/"+game.league, "name": displayNames[game.league]}, {"url": "/games/"+game.league+"/"+game.week, "name": "Week "+game.week}, {"name": game.blueTeam.team + " vs " + game.redTeam.team}];
 		include ../inc/breadcrumb.jade
 	.container.text-center
-		.team.col-md-4
+		.team.col-md-4.hidden-xs.hidden-sm
 			img(src=relUrl+"static/img/teams/"+game.blueTeam.team+".png")
 		.col-md-4
 			.p
@@ -15,12 +15,12 @@ block content
 			.title
 				h2
 					|#{game.blueTeam.team + " vs " + game.redTeam.team}
-		.team.col-md-4
+		.team.col-md-4.hidden-xs.hidden-sm
 			img(src=relUrl+"static/img/teams/"+game.redTeam.team+".png")
 		br
 		-if(game.played)
 			- winner = game.winner ? game.blueTeam.team : game.redTeam.team;
-			h3
+			h3.text-center
 				strong
 					|#{winner} wins 
 			h5 in #{Math.round(game.length/60)} minutes #{game.length%60} seconds.
@@ -151,7 +151,7 @@ block content
 			float: left;
 			height: 70px;
 		}
-		.team, .title {
+		.team {
 			text-align: center;
 			height: 250px;
 			line-height: 250px!important;
@@ -161,9 +161,14 @@ block content
 		}
 		.title {
 			margin-top: -76px;
+			margin-bottom: -100px;
 		}
 		.title h2 {
 			line-height: 250px!important;
+		}
+		h3 strong {
+			margin: auto;
+			clear: both;
 		}
 		.team img {
 			width: 200px;

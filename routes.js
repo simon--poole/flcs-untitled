@@ -14,7 +14,6 @@ var auth = require('connect-ensure-login').ensureLoggedIn;
 
 // Cover Page
 router.get('/', function(req, res, next) {
-  console.log(req.user);
   res.render('index', { title: 'Express', user: req.user });
 });
 
