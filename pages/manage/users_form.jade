@@ -1,0 +1,42 @@
+extends ../layout
+block content
+	- location = [{"url": "/", "name": "Site"}, {"url": "/manage", "name": "Management"}, {"url": "/manage/users", "name": "Users"}, {"name": "Edit User"}];
+		include ../inc/breadcrumb.jade
+	div.page-header
+		h3 Edit User
+		
+	.col-md-2
+	.col-md-8
+		-if(typeof err !== 'undefined')
+					blockquote.has-error
+						p.text-center.err= err.message
+		form(method="POST", action="/manage/users/edit").form-horizontal.form
+			input(type="hidden", name="uid", value=u._id)
+			.form-group(class=((typeof err !== 'undefined') ? 'has-error' : ''))
+				label(for="username").control-label Username
+				input(type="text", value= u.username, name="username").form-control
+			.form-group
+				label(for="privilege").control-label Privileges
+				select.form-control(name="privilege")
+					each level, i in privileges
+						optgroup(label=level.category)
+							each sublevel, o in level.privs
+								if(u.priv == sublevel.priv)
+									option(value=sublevel.priv, selected) #{sublevel.title}
+								else
+									option(value=sublevel.priv) #{sublevel.title}
+			br
+			.form-group.has-error
+				label(for="username").control-label New Password
+				input(type="password", placeholder= "New Password", name="password").form-control
+				.checkbox
+					label(for="change_password").checkbox-inline
+						input(type="checkbox", value="1", name="change_password", id="change_password")
+						|Change User Password
+			br
+			.form-group
+				input(type="submit", value="Edit User").btn.btn-large.btn-warning
+				
+			
+			
+	.col-md-2

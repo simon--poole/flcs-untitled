@@ -1,6 +1,118 @@
-extends layout
-
-block content
-  h1= message
-  h2= error.status
-  pre #{error.stack}
+-err = error || {"status": "401", stack: ""};
+-message = "Insufficient Permissions";
+doctype html
+html(lang="en")
+	head
+		meta(charset='utf-8')
+		meta(http-equiv='X-UA-Compatible', content='IE=edge')
+		meta(name='viewport', content='width=device-width, initial-scale=1')
+		title= title
+		link(rel='stylesheet', href='static/css/bootstrap.min.css')
+		script(src='https://code.jquery.com/jquery-2.1.4.min.js')
+	body
+		nav.navbar.navbar-static-top.navbar-default
+			.container
+				.navbar-header
+					button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#navbar', aria-expanded='false', aria-controls='navbar')
+						span.sr-only Toggle navigation
+						span.icon-bar
+						span.icon-bar
+						span.icon-bar
+					a.navbar-brand(href='#') Untitled Project
+				#navbar.collapse.navbar-collapse
+					ul.nav.navbar-nav
+						li.active
+							a(href='/') Home
+						li.dropdown
+							a(href='/games', data-toggle="dropdown") Games 
+								span.caret
+							ul.dropdown-menu.inverse-dropdown
+								li
+									a(href="/games/eulcs") EU LCS
+								li
+									a(href="/games/nalcs") NA LCS
+						li.dropdown
+							a(href='/teams', data-toggle="dropdown") Teams 
+								span.caret
+							ul.dropdown-menu
+								li
+									a(href="#") EU LCS
+								li
+									a(href="#") NA LCS
+									
+						li
+							a(href='/about') About
+						li
+							a(href='/contact') Contact
+						-if(typeof user !== 'undefined')
+							li(class=(page === 'manage' ? 'active' : ''))
+								a(href='/manage') Manage
+					-if(typeof user !== 'undefined')
+						ul.navbar-right.nav.navbar-nav
+							li
+								p.navbar-text
+									|Logged in as #{user.username}  
+								
+									a.navbar-link.small(href="/logout")
+										strong (Log Out)	
+		.site-wrapper
+			.site-wrapper-inner
+				.cover-container
+					.inner.cover.covercontents
+						h1.cover-heading
+							| #{err.status + ": "+ message}
+							pre.lead #{err.stack}
+		style.
+			html, body {
+				height: 100%;
+				width: 100%;
+			}
+			.site-wrapper, .site-wrapper-inner {
+				display: table;
+				width: 100%;
+				height: 100%;
+				min-height: 100%;
+			 }
+			 .site-wrapper {
+			 	margin-top: -71px;
+				background: url('/static/img/cover.jpg');
+				background-size: 100% auto;
+			 }
+			 .site-wrapper-inner {
+			 	background: rgba(0,0,0, 0.4);
+			 	box-shadow: inset 0 0 250px 75px rgba(0,0,0, 1);
+				z-index: 25;
+				position: relative;
+				vertical-align: middle;
+				overflow: hidden;
+			 }
+			 .cover-container {
+			 	margin-right: auto;
+				margin-left: auto;
+				vertical-align: middle;
+				position: absolute;
+				z-index: 45;
+				top: 5%;
+				text-align: center;
+				width: 100%;
+				height: 100%;
+			}
+			.inner {
+				padding: 30px;
+			}
+			.covercontents {
+				margin: auto;
+				background: rgba(0,0,0, 0.6);
+				vertical-align: middle;
+				width: 100%;
+				height: 100%;
+			}
+			.lead {
+				max-width: 90%;
+				margin: auto;
+				background: transparent;
+				color: white;
+				text-align: left;
+				border: 0;
+			}
+		script(src="static/js/bootstrap.min.js")

@@ -1,0 +1,11 @@
+extends ../layout
+
+block content
+	- location = [{"url": "/", "name": "Site"}, {"url": "/manage", "name": "Management"}, {"name": "Users"}];
+		include ../inc/breadcrumb.jade
+	div.page-header
+		h3 Overview
+	.col-md-2
+		-activePage = "overview";
+		include nav.jade
+	.col-md-4

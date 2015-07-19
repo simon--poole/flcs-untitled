@@ -1,0 +1,41 @@
+extends ../layout
+block content
+	- location = [{"url": "/", "name": "Site"}, {"url": "/manage", "name": "Management"}, {"name": "Users"}];
+		include ../inc/breadcrumb.jade
+	div.page-header
+		h3 User List
+	.col-md-2
+		-activePage = "users"
+		include nav.jade
+	.col-md-10
+		table.table.table-striped
+			tr
+					th ID
+					th Username
+					th Auth Level
+					-if(user && user.priv >= 0)
+						th Edit
+					-if(user && user.priv >= 0)
+						th Del
+			each u, i in data
+				tr
+					td= u._id
+					td= u.username
+					td= u.priv
+					-if(user && user.priv >= 0)
+						td
+							a(href='/manage/users/edit/'+u._id).btn.btn-warning.btn-xs Edit
+					-if(user && user.priv >= 0)
+						td
+							form(action='/manage/users/delete', method='POST')
+								input(type='hidden', value=u._id)
+								input(type='submit', value='Delete').btn.btn-danger.btn-xs
+	style.
+		th {
+			border-top: 0!important;
+		}
+		td {
+			line-height: 47px;
+			vertical-align: middle;
+			display: table-cell;
+		}
