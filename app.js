@@ -26,7 +26,7 @@ app.locals.pretty = true;
 
 
 /* Favicon (current: /static/favicon.ico */
-//app.use(favicon(path.join(__dirname, 'static', 'favicon.ico')));
+app.use(favicon(path.join(__dirname, 'static', 'favicon.ico')));
 
 /* General Usings */
 app.use(morgan('dev'));

@@ -314,18 +314,20 @@ router.get('/manage/users/edit/:uid', auth(20), function(req, res, next) {
 });
 
 router.post('/manage/users/edit', function(req, res, next){
-	UserControl.editUser(req, res, next, function(err, user){
-		if(err){
-			res.render('manage/users_form', {
-					user: req.user,
-					relUrl: "../../",
-					isEdit: true,
-					page: 'manage',
-					u: user,
-					err: err,
-				});
-		}
-		else	res.redirect('/manage/users');
+	auth.checkPriv(req, res, next, 21, function(req, res, next){
+		UserControl.editUser(req, res, next, function(err, user){
+			if(err){
+				res.render('manage/users_form', {
+						user: req.user,
+						relUrl: "../../",
+						isEdit: true,
+						page: 'manage',
+						u: user,
+						err: err,
+					});
+			}
+			else	res.redirect('/manage/users');
+		});
 	});
 });
 module.exports = router;
